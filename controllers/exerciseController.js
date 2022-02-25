@@ -64,7 +64,7 @@ exports.create_new_exercise = [
             });
             exercise.save((err, data) => {
                 if (err) { 
-                    debug(err);
+                    debug('unable to save' + err);
                     return next(err); 
                 }
                 res.send(data);
