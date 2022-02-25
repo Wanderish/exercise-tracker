@@ -47,10 +47,11 @@ exports.create_new_exercise = [
 
         //extract the validation errors from the request (if any)
         var errors = validationResult(req);
-
+        console.log('Body: ' + req.body._id);
         //check if 'errors' is empty or not and take necessary actions
         if (!errors.isEmpty()) {
-            debug("Errors" + errors.array());
+            debug("Errors: " + errors.array());
+            console.log('Errors: ' + errors.array());
             return next(errors.array());
         } else {
             //Data from form is valid. Proceed with further processing.
@@ -62,11 +63,14 @@ exports.create_new_exercise = [
                 duration: req.body.duration,
                 date: (req.body.date === "" ? new Date().toDateString() : req.body.date)
             });
+            console.log('Payload: ' + exercise);
             exercise.save((err, data) => {
                 if (err) { 
                     debug('unable to save' + err);
+                    console.log('unable to save' + err);
                     return next(err); 
                 }
+                console.log('Saved data: ' + data);
                 res.send(data);
             });
         }
