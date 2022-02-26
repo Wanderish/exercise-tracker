@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 
+app.use('/api', usersRouter);
+
 //make connection to mongodb
 const uri = process.env.MONGO_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -28,8 +30,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   console.error('App starting error:', err.stack);
   process.exit(1)  
 });
-
-app.use('/api', usersRouter);
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
