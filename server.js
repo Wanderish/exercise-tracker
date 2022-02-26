@@ -14,7 +14,7 @@ app.use(cors())
 app.use(helmet())
 app.use(compression()) //compress all routes
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.json());
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
