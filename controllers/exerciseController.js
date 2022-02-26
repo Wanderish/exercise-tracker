@@ -47,7 +47,6 @@ exports.create_new_exercise = [
 
         //extract the validation errors from the request (if any)
         var errors = validationResult(req);
-        console.log('Body: ' + req.body._id);
         //check if 'errors' is empty or not and take necessary actions
         if (!errors.isEmpty()) {
             debug("Errors: " + errors.array());
@@ -55,24 +54,34 @@ exports.create_new_exercise = [
             res.send('Please fill in all the required fields before proceeding further.');
         } else {
             //Data from form is valid. Proceed with further processing.
-
-            //create new object of Exercise from the escaped and trimmed data
-            var exercise = new Exercise({
-                _id: req.body._id,
-                description: req.body.description,
-                duration: req.body.duration,
-                date: (req.body.date === "" ? new Date().toDateString() : req.body.date)
-            });
-            console.log('Payload: ' + exercise);
-            exercise.save((err, data) => {
-                if (err) { 
-                    debug('unable to save' + err);
-                    console.log('unable to save' + err);
-                    return next(err); 
-                }
-                console.log('Saved data: ' + data);
-                res.send(data);
-            });
+            User.find({'_id': req.body._id})
+                .then(user => {
+                    if(!user) throw new Error('Unknown user with _id');
+                    //create new object of Exercise from the escaped and trimmed data
+                    var exercise = new Exercise({
+                        _id: req.body._id,
+                        description: req.body.description,
+                        duration: req.body.duration,
+                        date: (req.body.date === "" ? new Date().toDateString() : req.body.date)
+                    });
+                    exercise.save((err, data) => {
+                        if (err) { 
+                            debug('unable to save' + err);
+                            return next(err);
+                        }
+                        let uname = user[0].userName
+                        res.json({
+                            username: uname,
+                            description: data.description,
+                            duration: data.duration,
+                            date: data.date,
+                            _id: data._id
+                        });
+                    });
+                }).catch((err) => {
+                    debug(err);
+                    res.status(500).send(err.message);
+                })
         }
     }
 
