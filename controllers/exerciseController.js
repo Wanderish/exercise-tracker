@@ -15,9 +15,10 @@ exports.fetch_all_exercises = (req, res, next) => {
         Exercise.find({ userId })
             .where('date').gte(from).lte(to)
             .limit(+limit).exec()
-            .then(log => res.status(200).send({
-                _id: userId,
-                username: user.username,
+            .then(log =>
+                res.status(200).send({
+                _id: user[0]._id,
+                username: user[0].userName,
                 count: log.length,
                 log: log.map(o => ({
                     description: o.description,
