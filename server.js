@@ -5,7 +5,7 @@ const helmet = require('helmet')
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
+ mongoose = require('mongoose')
 
 require('dotenv').config()
 
@@ -14,6 +14,7 @@ app.use(cors())
 app.use(helmet())
 app.use(compression()) //compress all routes
 app.use(express.static('public'))
+app.use(express.static('views'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
 console.log('Sending index.html file now.')
