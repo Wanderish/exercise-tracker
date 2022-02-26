@@ -1,11 +1,11 @@
-var usersRouter = require('./routes/userRoutes');
-var compression = require('compression')
-var helmet = require('helmet')
+const usersRouter = require('./routes/userRoutes')
+const compression = require('compression')
+const helmet = require('helmet')
 
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-var mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 require('dotenv').config()
 
@@ -14,12 +14,13 @@ app.use(cors())
 app.use(helmet())
 app.use(compression()) //compress all routes
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json());
+console.log('Sending index.html file now.')
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
-
+console.log('Setting up routes..')
 app.use('/api', usersRouter);
 
 //make connection to mongodb
