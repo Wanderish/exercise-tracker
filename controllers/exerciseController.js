@@ -33,10 +33,10 @@ exports.fetch_all_exercises = (req, res, next) => {
 }
 
 //POST request to create a new exercise entry
-exports.create_new_exercise = [
-
+exports.create_new_exercise = (req, res) => {
+    res.send('Hello World')
     //Validate and sanitize all the required fields
-    body('_id').trim().isAlphanumeric().escape().isLength({ min: 1 }).withMessage('_id is a required field.'),
+    /* body('_id').trim().isAlphanumeric().escape().isLength({ min: 1 }).withMessage('_id is a required field.'),
     body('description').trim().escape().isLength({ min: 1 }).withMessage('Description is a required field.')
         .isAlphanumeric().withMessage('Description is a non-alphanumeric field.'),
     body('duration').trim().isNumeric().withMessage('Duration is a numeric field.')
@@ -75,5 +75,5 @@ exports.create_new_exercise = [
             });
         }
     }
-
-];
+ */
+};
