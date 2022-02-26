@@ -1,5 +1,4 @@
 var usersRouter = require('./routes/userRoutes');
-var exerciseRouter = require('./routes/exerciseRoutes');
 var compression = require('compression')
 var helmet = require('helmet')
 
@@ -31,7 +30,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 });
 
 app.use('/api', usersRouter);
-app.use('/api', exerciseRouter);
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)

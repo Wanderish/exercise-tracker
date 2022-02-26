@@ -36,11 +36,11 @@ exports.fetch_all_exercises = (req, res, next) => {
 exports.create_new_exercise = [
 
     //Validate and sanitize all the required fields
-/*     body('_id').trim().isAlphanumeric().escape().isLength({ min: 1 }).withMessage('_id is a required field.'),
+    body('_id').trim().isAlphanumeric().escape().isLength({ min: 1 }).withMessage('_id is a required field.'),
     body('description').trim().escape().isLength({ min: 1 }).withMessage('Description is a required field.')
         .isAlphanumeric().withMessage('Description is a non-alphanumeric field.'),
     body('duration').trim().isNumeric().withMessage('Duration is a numeric field.')
-        .isLength({ min: 1 }).withMessage('Duration is a required field.'), */
+        .isLength({ min: 1 }).withMessage('Duration is a required field.'),
 
     //process the request now post validation and sanitization
     (req, res, next) => {
@@ -52,7 +52,7 @@ exports.create_new_exercise = [
         if (!errors.isEmpty()) {
             debug("Errors: " + errors.array());
             console.log('Errors: ' + errors.array());
-            return next(errors.array());
+            res.send('Please fill in all the required fields before proceeding further.');
         } else {
             //Data from form is valid. Proceed with further processing.
 
